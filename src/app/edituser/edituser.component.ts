@@ -1,28 +1,62 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { ActivatedRoute, ParamMap } from '@angular/router'
 import { BaseService } from '../base.service';
-import Swal from 'sweetalert2'
 import { response } from 'express';
-import { RepositionScrollStrategy } from '@angular/cdk/overlay';
+import Swal from 'sweetalert2'
 
 @Component({
-  selector: 'app-adduser',
-  templateUrl: './adduser.component.html',
-  styleUrl: './adduser.component.css'
+  selector: 'app-edituser',
+  templateUrl: './edituser.component.html',
+  styleUrl: './edituser.component.css'
 })
-export class AdduserComponent {
+export class EdituserComponent {
+  userUrl: any={};
 
-  data:any= [];
 
   bosses: string[] = [];
   employees: string[] = [];
 
-  bosesOption: any[] = [];
-
   temporalboss:string = "";
   temporalemployee:string = "";
-  constructor(private backService: BaseService){}
-  ngOnInit(){
+
+  bosesOption: any[] = [];
+
+  data:any= [];
+
+  user: any = {
+    name: "",
+    email:"", 
+    position:"",
+    relation:{boss:[],employee:[]}
+  };
+
+  constructor(private route: ActivatedRoute,private backService: BaseService) {}
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.userUrl = localStorage.getItem("Email")
+      console.log("LOCAL STORAGE", localStorage.getItem("Email"));
+      console.log("clicked",this.userUrl,params.get('user'));
+      this.backService.GetSpecificUser(this.userUrl).subscribe(response=>{
+        let ret :any = response;
+        console.log(response);
+
+        this.user.email = ret['employees'][0]['email'];
+        this.user.name = ret['employees'][0]['name'];
+        this.user.position = ret['employees'][0]['position'];
+
+        for(let i = 0; i < ret['relations'].length;i++){
+          if(ret['relations'][i]['boss'] != this.userUrl){
+            this.bosses.push(ret['relations'][i]['boss']);
+          }
+          if(ret['relations'][i]['employeeref'] != this.userUrl){
+            this.employees.push(ret['relations'][i]['employeeref']);
+          }
+        }
+      })
+
+    })
+
     this.backService.GetUsers().subscribe(response=>{
       let elem :any=  response;
       this.data = response;
@@ -35,12 +69,6 @@ export class AdduserComponent {
     });
   }
 
-  user: any = {
-    name: "",
-    email:"", 
-    position:"",
-    relation:{boss:[],employee:[]}
-  };
 
   SendInfo(){
     this.user.relation.boss = this.bosses;
@@ -48,14 +76,16 @@ export class AdduserComponent {
       this.user.relation.employee = this.employees;
     }else{
       this.user.relation.employee = [];
-    }
-    this.backService.AddUser(this.user).subscribe(response =>{
+    }   
+    
+    this.backService.UpdateUser(this.user).subscribe(response =>{
       let resp:any =  response;
       if(resp['error'] != undefined){
-        this.Alert('error','the user has not been created');
+        this.Alert('error','the user has not been updated');
+        console.log("CLICked",response)
       }
       else{
-        this.Alert('User Created','the user has been created');
+        this.Alert('User Updated','the user has been updated');
       }
       
     });
@@ -95,5 +125,6 @@ export class AdduserComponent {
   RemoveEmployee(){
     this.employees.splice(this.employees.indexOf(this.temporalemployee),1);
   }
+
 
 }

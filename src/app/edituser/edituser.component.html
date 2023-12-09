@@ -1,0 +1,93 @@
+<div class="mainContainer">
+    <h1>Update User</h1>
+    
+        <form #userForm="ngForm" class="example-form">
+            <mat-form-field class="example-full-width">
+              <mat-label>Email</mat-label>
+              <input [(ngModel)] = "user.email" matInput [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+    
+            <mat-form-field class="example-full-width">
+                <mat-label>Name</mat-label>
+                <input [(ngModel)] = "user.name" matInput [ngModelOptions]="{standalone: true}" >
+              </mat-form-field>
+    
+              <h4>Position</h4>
+            <mat-form-field>
+            <mat-label>Choose an option</mat-label>
+            <mat-select [(ngModel)] = "user.position" [ngModelOptions]="{standalone: true}" >
+                <mat-option value="boss">boss</mat-option>
+                <mat-option value="employee">employee</mat-option>
+            </mat-select>
+            </mat-form-field>
+            
+            
+            
+              
+            <div style="display: flex; flex-direction: row;" >
+                <div>
+                    <h4>Boss</h4>
+                <mat-form-field>
+                    <mat-label>Choose an option</mat-label>
+                    <mat-select [(ngModel)] = "temporalboss" [ngModelOptions]="{standalone: true}" >
+                        <mat-option *ngFor="let options of bosesOption" [value]="options.email">{{options.email}}</mat-option>    
+                    </mat-select>
+                    </mat-form-field> 
+                    
+                </div>
+                
+                    <div style="margin-top:10%;margin-left: 5%;">
+                        <button (click)="AddBoss()" mat-mini-fab color="accent" aria-label="add employee">
+                            +
+                          </button>
+                    </div>
+    
+                    <div style="margin-top:10%;margin-left: 5%; display: flex; flex-direction: row;">
+                        <div aria-label="Fruit selection" *ngFor="let item of bosses">
+                              <mat-chip-row color="primary" (removed)="RemoveBoss()">
+                                {{item}}
+                                <button matChipRemove [attr.aria-label]="'remove ' + item">
+                                  <mat-icon>cancel</mat-icon>
+                                </button>
+                              </mat-chip-row>
+                            </div>
+                    </div>
+                    
+    
+            </div>
+            <div style="display: flex; flex-direction: row;" *ngIf="user.position == 'boss'">
+                <div>
+                    <h4>Employee</h4>
+                <mat-form-field>
+                    <mat-label>Choose an option</mat-label>
+                    <mat-select [(ngModel)] = "temporalemployee" [ngModelOptions]="{standalone: true}" >
+                        <mat-option *ngFor="let options of data.employees" [value]="options.email">{{options.email}}</mat-option>                    
+                    </mat-select>
+                    </mat-form-field> 
+                    
+                </div>
+                
+                    <div style="margin-top:10%;margin-left: 5%;">
+                        <button (click)="AddEmployee()" mat-mini-fab color="accent" aria-label="add employee">
+                            +
+                          </button>
+                    </div>
+    
+                    <div style="margin-top:10%;margin-left: 5%; display: flex; flex-direction: row;">
+                        <div aria-label="Fruit selection" *ngFor="let item of employees">
+                              <mat-chip-row color="primary" (removed)="RemoveEmployee()">
+                                {{item}}
+                                <button matChipRemove [attr.aria-label]="'remove ' + item">
+                                  <mat-icon>cancel</mat-icon>
+                                </button>
+                              </mat-chip-row>
+                            </div>
+                    </div>
+            </div>
+          </form>
+          <div><button routerLink="" style="margin-right: 5%;" mat-raised-button color="primary">volver</button> <button (click)="SendInfo()" mat-raised-button color="primary">Save</button>   </div>
+    
+    
+    
+    
+    </div>

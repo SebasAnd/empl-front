@@ -16,6 +16,7 @@ import {FormsModule} from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
 import {MatIconModule} from '@angular/material/icon';
 import {MatChipsModule} from '@angular/material/chips';
+import { EdituserComponent } from './edituser/edituser.component';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import {MatChipsModule} from '@angular/material/chips';
     AppComponent,
     HomeComponent,
     AdduserComponent,
+    EdituserComponent,
   ],
   imports: [
     BrowserModule,

@@ -12,6 +12,8 @@
                 <th scope="col">Name</th>
                 <th scope="col">Position</th>
                 <th scope="col">Version</th>
+                <th scope="col"></th>
+
             </tr>
         </thead>
         <tbody>
@@ -22,6 +24,15 @@
                     <td>{{ item['name']}}</td>
                     <td>{{ item['position']}}</td>
                     <td>{{ item['version']}}</td>
+                    <td><button mat-mini-fab (click)="AddToLocal(item.email)" routerLink="editU" color="basic" aria-label="Example icon button with a filter list icon">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-mini-fab  (click)="DeleteUser(item)" color="warn" aria-label="Example icon button with a filter list icon">
+                        <mat-icon>delete</mat-icon>
+                      </button>                    
+                    </td>
+
+                      
                 </tr>
         
         </tbody>

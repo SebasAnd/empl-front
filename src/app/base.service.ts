@@ -13,14 +13,33 @@ export class BaseService {
   }
 
   AddUser(obj:any){
-    return this.http.post("http://localhost:3000/addUser",obj);
+    return this.http.post("http://localhost:3000/addUser",obj,{
+      headers:{
+        "Content-Type": "application/json",
+      }
+      
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+);
   }
   UpdateUser(obj:any){
-    return this.http.post("http://localhost:3000/updateUser",obj);
+    return this.http.post("http://localhost:3000/updateUser",obj,{
+      headers:{
+        'Content-Type': 'application/json'
+      }
+      
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    });
   }
 
   DeleteUser(obj:any){
-    return this.http.post("http://localhost:3000/deleteUser",obj);
+    return this.http.post("http://localhost:3000/deleteUser",obj,{
+      headers:{
+        "Content-Type": "application/json",
+      }
+      
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },);
   }
 
   GetSpecificUser(email: string){
