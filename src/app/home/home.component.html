@@ -1,1 +1,49 @@
-<p>home works!</p>
+
+  
+<div class="mainContainer">
+    <h1>Employees</h1>
+    <div>
+        <button routerLink="/addU" mat-raised-button color="primary">Create</button>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Email</th>
+                <th scope="col">Name</th>
+                <th scope="col">Position</th>
+                <th scope="col">Version</th>
+            </tr>
+        </thead>
+        <tbody>
+           
+                <tr *ngFor="let item of data['employees']">
+                    
+                    <td>{{ item['email']}}</td>
+                    <td>{{ item['name']}}</td>
+                    <td>{{ item['position']}}</td>
+                    <td>{{ item['version']}}</td>
+                </tr>
+        
+        </tbody>
+    </table>
+
+    <h1>Relations</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Boss</th>
+                <th scope="col">Employee</th>
+            </tr>
+        </thead>
+        <tbody>
+           
+                <tr *ngFor="let item of data['relations']">
+                    
+                    <td>{{ item['boss']}}</td>
+                    <td>{{ item['employeeref']}}</td>
+                </tr>
+        
+        </tbody>
+    </table>
+</div>
+  
